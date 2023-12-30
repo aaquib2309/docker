@@ -13,4 +13,5 @@ This repository is a testament to my proficiency in Docker, showcasing a collect
 1. Clone this repository:
 
    ```bash
-   https://github.com/aaquib2309/docker.git
+   git clone https://github.com/aaquib2309/docker.git
+   cd docker
