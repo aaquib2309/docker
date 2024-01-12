@@ -1,0 +1,22 @@
+- Stopping and Removing a Container
+> httpd 
+> kill -SIGSTOP 11253 
+> kill -SIGSTOP $(pgrep httpd)
+> kill -SIGCONT $(pgrep httpd)
+> kill -SIGTERM $(pgrep httpd)
+> kill -SIGKILL $(pgrep httpd)
+> kill -9 $(pgrep httpd)
+
+> docker container run --name=web htppd
+> docker container pause web 
+> docker container unpause web 
+> docker container stop web 
+> docker container kill --signal=9 web 
+> docker container stop web 
+> docker container rm web
+> docker container ls -a 
+> docker container ls -q 
+> docker container stop $(docker container ls -q)
+> docker container rm $(docker container ls -aq)
+> docker container prune :- remove all stopped container
+> docker container run --rm ubuntu expr 4 + 5 :- remove the container as soon as it exits 
