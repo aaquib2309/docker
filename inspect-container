@@ -1,0 +1,8 @@
+- Inspecting a Container
+> docker container inspect webapp
+> docker container stats :- shows how much resource using 
+> docker container top webapp
+> docker container logs webapp
+> docker container logs -f webapp
+> docker container start webapp
+> docker system events --since 60m 
