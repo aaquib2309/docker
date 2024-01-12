@@ -1,0 +1,29 @@
+- Basic Container Operations
+> docker images ls
+> docker container ls
+> docker volume ls
+> docker network ls
+
+> docker container run -it ubuntu
+> docker image build .
+> docker container attach ubuntu
+> docker container kill ubuntu
+
+> docker container run httpd
+> docker container ls
+> docker container ls -a 
+> docker container ls -q
+> docker container ls -aq 
+> docker container start 36a3 
+
+> docker container run nginx 
+> docker container ls
+> docker container ls -a 
+> docker container run -it centos
+> docker container ls 
+> docker container ls -l 
+> docker container run -itd --name=webapp ubuntu
+> docker container ls -l
+> docker container rename webapp new-webapp
+> docker container run -d httpd
+> docker container attach a76l 
