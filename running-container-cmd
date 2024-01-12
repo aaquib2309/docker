@@ -1,0 +1,7 @@
+- Interacting with a Running Container
+> docker container run -it ubuntu :- If exit container stops 
+> docker container ls -l 
+> docker container run -it ubuntu :- [press - CTRL+p+q]
+> docker container exec kjhd2546 hostname :- execute a command on a container 
+> docker container exec kjhd2546 /bin/bash :- OR 
+> docker container attach kjhd2546 
