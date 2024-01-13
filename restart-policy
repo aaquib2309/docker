@@ -8,3 +8,10 @@
 > docker container run --restart=always ubuntu 
 > docker container run --restart=unless-stopped ubuntu
 > docker container run --name=nic --restart=unless-stopped ubuntu
+
+> vim /etc/docker/daemon.json :- If docker daemon stops make sure it start
+  {
+  "debug": true,
+  "hosts": ["tcp://192.168.1.10:2376"],
+  "live-restore": true
+  }
