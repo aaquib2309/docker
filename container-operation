@@ -1,0 +1,61 @@
+> docker container create httpd
+> docker container ls
+> docker container ls -a
+> docker container start f88955c5c175
+> docker container ls :- Shows container
+> docker container ls -a :- Shows stopped container 
+> docker container ls -l :- detail running container 
+> docker container ls -q :- Shows running container id 
+> docker container ls -aq :- Shows stopped and running both 
+
+> docker run -it ubuntu
+> docker ps
+> docker exec 82a hostname
+> docker exec 82a cat /etc/os-release  
+> docker container run -it ubuntu
+  ps -ef :- you will find /bin/bash running
+  CTRL+p+q :- to exitfrom container without stopping it
+> docker ps 
+> docker container ls
+> docker container exec -it 87b /bin/bash :- go inside running container 
+  ps -ef :- 2 /bin/bash process running
+  exit :- the main process still runs so that your container will not shutdown
+> docker container ls :- see your container is still running
+> docker container attach 87b :- it will not create /bin/bash new process it attachs to the main running process
+  exit:- It will kill the container
+> docker container stop 87b5
+> docker container start 87b5
+
+> docker container run -it ubuntu
+> docker ps 
+> docker container ls
+> docker container ls -a
+> docker container exec -it 87b /bin/bash :- go inside with the new /bin/bash process
+  exit :- will not kill the container now
+> docker ps
+> docker container run -itd ubuntu
+> docker ps
+> docker container ls
+> docker container -itd --name=aaquib ubuntu
+> docker container run -itd --name=aaquib ubuntu
+> docker container ls
+> docker container rename aaquib tarun
+> docker ps
+> docker container ls
+> docker container inspect tarun :- inspect container 
+> docker container stats
+> docker container top 745f
+> docker container logs 745f
+> docker container logs 2b33ceb578e7
+> docker ps
+> docker container logs -f 2b33ceb578e7
+> docker container prune
+> docker container stop $(docker container ls -q)
+> docker container ls
+> docker container rm $(docker container ls -aq)
+> docker ps -aq
+> docker ps
+> docker ls
+> docker container ls
+> docker container ls -a
+> docker container ls -l
