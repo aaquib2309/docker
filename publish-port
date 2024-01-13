@@ -1,0 +1,31 @@
+> docker run –p 80:5000 kodekloud/simple-webapp
+> docker run –p 8000:5000 kodekloud/simple-webapp 
+> docker run –p 8001:5000 kodekloud/simple-webapp
+> docker run –p 3306:3306 mysql
+> docker run –p 8306:3306 mysql
+
+- Container PORT Publish
+> docker run –p 8000:5000 kodekloud/simple-webapp
+> docker run –p 192.168.1.5:8000:5000 kodekloud/simple-webapp :- Limit to that IP
+> docker run –p 127.0.0.1:8000:5000 kodekloud/simple-webapp :- made available locally
+> docker run –p 5000 kodekloud/simple-webapp 
+> Ephemeral Port Range => 32768 - 60999
+> cat /proc/sys/net/ipv4/ip_local_port_range :- {32768,60999}
+
+> docker run –P kodekloud/simple-webapp
+> Dockefile
+  FROM ubuntu:16.04
+  RUN apt-get update && apt-get install -y python python-pip
+  RUN pip install flask
+  COPY app.py /opt/
+  ENTRYPOINT flask run
+  EXPOSE 5000
+
+> docker run –P --expose=8080 kodekloud/simple-webapp :- expose another port with 5000
+> docker inspect kodekloud/simple-webapp :- exposed port list 
+  "ExposedPorts": {
+  “5000/tcp": {},
+  "8080/tcp": {}
+  },
+
+> iptables -t nat –S DOCKER 
