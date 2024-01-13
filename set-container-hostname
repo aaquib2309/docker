@@ -1,0 +1,7 @@
+# Setting a Container Hostname
+> docker container run -itd --name=webapp --hostname=webapp ubuntu
+> docker container ls
+> docker container exec -it webapp /bin/bash
+  hostname :- run inside the container 
+  exit
+> docker container ls : still running because main process is still running 
