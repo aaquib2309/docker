@@ -1,0 +1,4 @@
+# Copying Contents into Container
+> docker container cp /tmp/web.conf webapp:/etc/web.conf :- from host to container
+> docker container cp webapp:/tmp/web.conf /tmp/ : From container to host 
+> docker container cp /tmp/app webapp:/etc/ :- copy directory
