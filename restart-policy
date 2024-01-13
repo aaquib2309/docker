@@ -1,0 +1,10 @@
+# Restart Policies
+> docker container run ubuntu expr 3+5 :- container run the calculation and stops with exit {0}
+> docker container run ubuntu expr three + 5 :- Stops and give the error with {1}
+> docker container stop httpd :- gracefully stop with {0}
+
+> docker container run --restart=no ubuntu 
+> docker container run --restart=on-failure ubuntu 
+> docker container run --restart=always ubuntu 
+> docker container run --restart=unless-stopped ubuntu
+> docker container run --name=nic --restart=unless-stopped ubuntu
