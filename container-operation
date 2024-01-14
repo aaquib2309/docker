@@ -59,3 +59,33 @@
 > docker container ls
 > docker container ls -a
 > docker container ls -l
+
+# Docker Container Operations Continued
+> docker container run -itd --name=aaquib --rm ubuntu :- when you use --rm if you stop it will delete the container also
+> docker container stop aaquib
+> docker container ls -a
+
+> docker container run -itd --name=aaquib --hostname=nic --rm ubuntu 
+> docker container ls -l
+> docker exec -it aaquib hostname  
+> docker exec -it aaquib /bin/bash
+
+> docker container run -itd --name=aaquib --restart=no ubuntu :- If it stops it will not start by default
+> docker container run -itd --name=aaquib --restart=on-failure ubuntu :- If it fails it starts 
+> docker container run -itd --name=aaquib --restart=always ubuntu :- when you stop it start by default
+> systemctl restart docker :- Even the docker daemon restart the container also started
+> docker container run -itd --name=aaquib --restart=unless-stopped ubuntu :- If container stoped it won't start
+> systemctl restart docker :- Even you restart the daemon the container won't start
+
+> docker system events --since 60m :- 
+
+> docker container run -itd --name=case1 httpd
+> docker container ls -l
+> > docker container restart case1
+> docker container run -itd -P --name=case2 httpd
+> docker container ls -l
+> docker container restart case2
+> docker container run -itd --name=case3 -p 82:80 httpd
+> docker container ls -l
+> docker container restart case3
+
