@@ -1,0 +1,11 @@
+# Docker Debug Mode
+> docker system info
+  Debug Mode: false
+> vi /etc/docker/daemon.json
+  {
+    "debug": true
+  }
+> systemctl reload docker 
+> systemctl status docker   
+> docker system info  
+  Debug Mode: true
