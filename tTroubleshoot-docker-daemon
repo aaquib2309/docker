@@ -1,0 +1,12 @@
+> docker ps
+> export DOCKER_HOST=“tcp://192.168.1.10:2376" :- if accessing from remote 
+  2375 :- unencrypted traffic
+  2376 :- encrypted traffic
+> docker ps 
+> systemctl start docker 
+> systemctl status docker 
+> journalctl -u docker.service
+> df -h
+> docker container prune
+> docker image prune
+> docker system info
