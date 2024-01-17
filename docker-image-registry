@@ -142,3 +142,13 @@
   RUN          pip3 install flask flask-mysql
   COPY         app.py /opt/source code
   ENTRYPOINT   flask run 
+
+- Dockerfile best practice
+> Create slim/minimal images
+> Find an official minimal image that exists 
+> Only install necessary packages 
+> Maintain different images for different environments 
+  - Development – debug tools 
+  - Production - lean 
+> Use multi-stage builds to create lean production ready images.  
+> Avoid sending unwanted files to the build context
