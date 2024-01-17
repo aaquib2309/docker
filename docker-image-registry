@@ -1,0 +1,144 @@
+# Docker Image Registry
+> https://hub.docker.com/search?q=&type=image
+> docker run ubuntu
+> docker run ubuntu:18.04
+> docker run ubuntu:trusty 
+> docker image ls   
+> docker search httpd
+> docker search httpd --limit 2 
+> docker search --filter stars=10 --filter is-official=true httpd 
+> docker image pull httpd
+> docker image list 
+
+> docker pull gcr.io/organization/ubuntu :- pulling from private
+> docker login docker.io
+> docker image push httpd 
+> docker image list
+> docker image tag httpd:alpine httpd:customv1 :- tagging image
+> docker image list
+> docker image tag httpd:alpine gcr.io/company/httpd:customv1 
+> docker image push gcr.io/company/httpd:customv1 
+> docker image list 
+> docker system df 
+
+> docker image rm httpd:customv1
+> docker image rm httpd:alpine 
+> docker image prune -a :- remove all unused image
+
+> docker image list
+> docker image history ubuntu
+> docker image inspect httpd 
+> docker image inspect httpd -f '{{.Os}}'
+> docker image inspect httpd -f '{{.Architecture}}'
+> docker image inspect httpd -f '{{.Architecture}} {{.Os}}' 
+> docker image inspect httpd -f '{{.ContainerConfig.ExposedPorts}}'
+
+> docker image save alpine:latest -o alpine.tar :- save image
+> docker image load -i alpine.tar 
+> docker image ls 
+> docker export ubuntu > testcontainer.tar :- exporting container
+> docker image import testcontainer.tar newimage:latest
+> docker image ls 
+
+- Build HTTPD image 
+> vim index.html
+  <h1>Hello this custom image for httpd from aaquib</h1>
+
+> vim Dockerfile
+  # The Dockerfile is for httpd server
+  FROM    centos:7
+  RUN     yum -y update
+  RUN     yum -y install httpd
+  COPY    ./index.html /var/www/html/index.html
+  EXPOSE  80
+  CMD     ["httpd", "-D", "FOREGROUND"]
+
+> docker image build .
+> docker image build -t aaquib :- giving tag 
+> docker image ls
+> docker container run -itd --name=testimage -p 82:80 aaquib 
+> docker login 
+> docker push aaquib :- pushing image on docker hub
+
+- Build Tomcat Image
+> git clone https://github.com/yogeshraheja/dockertomcat.git
+> vim Dockerfile
+  FROM centos:7
+  ARG tomcat_version=8.5.6
+  RUN  yum install -y epel-release java-1.8.0-openjdk.x86_64 wget
+  RUN groupadd tomcat && mkdir /opt/tomcat
+  RUN useradd -s /bin/nologin -g tomcat -d /opt/tomcat tomcat
+  WORKDIR /
+  RUN wget https://archive.apache.org/dist/tomcat/tomcat-8/v$tomcat_version/bin/apache-tomcat-$tomcat_version.tar.gz
+  RUN tar -zxvf apache-tomcat-$tomcat_version.tar.gz -C /opt/tomcat --strip-components=1
+  RUN cd /opt/tomcat && chgrp -R tomcat conf
+  RUN chmod g+rwx /opt/tomcat/conf && chmod g+r /opt/tomcat/conf/*
+  RUN chown -R tomcat /opt/tomcat/logs/ /opt/tomcat/temp /opt/tomcat/webapps /opt/tomcat/work
+  RUN chgrp -R tomcat /opt/tomcat/bin && chgrp -R tomcat /opt/tomcat/lib && chmod g+rwx /opt/tomcat/bin && chmod g+r /opt/tomcat/bin/*
+  WORKDIR /opt/tomcat/webapps
+  RUN wget https://tomcat.apache.org/tomcat-7.0-doc/appdev/sample/sample.war
+  EXPOSE 8080
+  CMD ["/opt/tomcat/bin/catalina.sh","run"]
+> docker image build -t tomcat:v1 .
+> docker container run -itd --name=test_v1 -p 84:8080 tomcat:v1
+> docker image build -t tomcat:v2 --build=arg tomcat_version=8.5.8 . :- pass argument to change the tomcat version
+> docker container run -itd --name=test_v2 -p 86:8080 tomcat:v2
+
+- Docker commit method 
+> docker container run –d --name httpd httpd
+> docker container exec -it httpd bash
+> docker container commit -a "NIC" aaquib customaaquib :- Creating Image from container 
+> docker image ls
+
+- Docker commit method to create an Image
+> docker image pull centos:7
+> docker image ls
+> docker container create -it --name=test centos:7
+> docker container ls -l
+> docker container start test
+> docker container exec -it test /bin/bash
+> yum update -y
+> yum install httpd
+> echo "<h1> Hello world </h1>" > /var/www/html/index.html
+> docker container stop 
+> docker container commit –a “aaquib” -c 'CMD ["httpd", "-D", "FOREGROUND"]' test webtest:v1
+> docker image ls
+> docker container run -itd 
+> docker image tag webtest:v1 aaquib/newimg:v1
+> docker image ls
+> docker login 
+> docker push aaquib/newimg:v1
+
+- CMD vs Entrypoint
+> CMD:- 
+  - The CMD instruction is used to provide default arguments for the ENTRYPOINT instruction or to specify a command that will  
+    be executed if no other command is provided at runtime.
+  - It allows you to set the default command and/or parameters that will be executed when the container starts.
+  - You can use CMD to provide a default behavior for your container, but the command can be overridden at runtime by
+    specifying a command when running the container.
+
+> vim Dockerfile
+  FROM ubuntu
+  CMD ["echo", "Hello, World!"]
+> When you run a container from this image without specifying a command, it will execute the CMD command 
+  (echo "Hello, World!")  
+
+> ENTRYPOINT:-
+  - The ENTRYPOINT instruction sets the main command and its parameters that will be executed when the container starts.
+  - Unlike CMD, the command specified in ENTRYPOINT cannot be overridden at runtime. However, you can still provide additional
+    arguments to the ENTRYPOINT command when running the container.  
+> vim Dockerfile
+  FROM ubuntu
+  ENTRYPOINT ["echo", "Hello, World!"]
+> When you run a container from this image, it will always execute the ENTRYPOINT command (echo "Hello, World!"). You can 
+  still provide additional arguments.
+
+> vim Dockerfile  :- Cache Busting
+  FROM         ubuntu 
+  RUN          apt get update && apt get install y
+               python \
+               python-dev \
+               python3pip=20.0.2
+  RUN          pip3 install flask flask-mysql
+  COPY         app.py /opt/source code
+  ENTRYPOINT   flask run 
